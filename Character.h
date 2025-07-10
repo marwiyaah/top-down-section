@@ -20,12 +20,12 @@ private:
 
     float width{};
     float height{};
+    float scale{4.0f};
 
 public:
     Vector2 getWorldPos() { return worldPos; }
-    void setScreenPos(int winWidth, int winHeight);
     void tick(float deltaTime);
     void undoMovement();
-    Character();
+    Character(int winWidth, int winHeight);
     
 };
