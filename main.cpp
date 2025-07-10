@@ -1,66 +1,6 @@
 #include "raylib.h"
 #include "raymath.h"
-
-class Character{
-private:
-    Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
-    Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
-    Texture2D running{LoadTexture("characters/knight_run_spritesheet.png")};
-    Vector2 screenPos{};
-    Vector2 worldPos{};
-    // 1: facing right, -1 : facing left
-    float rightLeft{1.f};
-
-    // animation variables
-    float runningTime{};
-    int frame{};
-    const int maxFrames{6};
-    const float updateTime{1.f/12.f};
-    const float speed{4.f};
-public:
-    Vector2 getWorldPos() { return worldPos; }
-    void setScreenPos(int winWidth, int winHeight);
-    void tick(float deltaTime);
-};
-
-void Character::setScreenPos(int winWidth, int winHeight){
-    screenPos = {
-        (float)winWidth/2.0f - 4.0f * (0.5f * (float)texture.width/6.0f),
-        (float)winHeight/2.0f - 4.0f * (0.5f * (float)texture.height)
-    };
-}
-
-void Character :: tick(float deltaTime){
-    Vector2 direction{};
-       if (IsKeyDown(KEY_A)) direction.x -= 1.0;
-       if (IsKeyDown(KEY_D)) direction.x += 1.0;
-       if (IsKeyDown(KEY_W)) direction.y -= 1.0;
-       if (IsKeyDown(KEY_S)) direction.y += 1.0;
-       
-       if (Vector2Length(direction) != 0.0)
-       {
-        // set worldPos = worldPos + direction
-        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
-        direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
-        texture = running;
-       } else {
-            texture = idle;
-       }
-
-       // update animation frame
-       runningTime += GetFrameTime();   // running time +=  delta time (dt)
-       if (runningTime >= updateTime)
-       {    
-            frame++;
-            runningTime = 0.f;
-            if (frame > maxFrames) frame = 0;
-       }
-
-       // draw the character
-       Rectangle source{frame * (float)texture.width/6.f, 0.f, rightLeft * (float)texture.width/6.f, (float)texture.height};
-       Rectangle dest{screenPos.x, screenPos.y, 4.0f * (float)texture.width/6.0f, 4.0f * (float)texture.height};
-       DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
-}
+#include "Character.h"
 
 
 int main(){
@@ -70,6 +10,7 @@ int main(){
 
     Texture2D map = LoadTexture("nature_tileset/OpenWorldMap24x24.png");
     Vector2 mapPos{0.0, 0.0};
+    const float mapScale{4.0f};
 
     Character knight;
     knight.setScreenPos(windowWidth, windowHeight);
@@ -84,8 +25,17 @@ int main(){
         mapPos = Vector2Scale(knight.getWorldPos(), -1.f);
 
        // draw the map
-       DrawTextureEx(map, mapPos, 0.0, 4.0, WHITE);
+       DrawTextureEx(map, mapPos, 0.0, mapScale, WHITE);
        knight.tick(GetFrameTime());
+        // check map bounds
+       if (knight.getWorldPos().x < 0.f ||
+           knight.getWorldPos().y < 0.f ||
+           knight.getWorldPos().x + windowWidth > map.width * mapScale ||
+           knight.getWorldPos().y + windowHeight > map.height * mapScale)
+       {
+           knight.undoMovement();
+       }
+       
 
        EndDrawing();
     }
