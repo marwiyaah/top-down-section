@@ -27,6 +27,7 @@ protected:
     float width{};
     float height{};
     float scale{4.0f};
+    Vector2 velocity{};
    
 public:
     BaseCharacter();
@@ -34,6 +35,8 @@ public:
     void undoMovement();
     Rectangle getCollisionRec();
     virtual void tick(float deltaTime);
+    // pure virtual function
+    virtual Vector2 getScreenPos() = 0;
 };
 
 
