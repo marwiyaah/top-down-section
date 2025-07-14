@@ -13,7 +13,7 @@ Character :: Character(int winWidth, int winHeight){
     };
 
     // start the player position from here
-    worldPos = { winWidth * 0.5f, winHeight * 0.5f };
+    //worldPos = { winWidth * 0.5f, winHeight * 0.5f };
    
 
 }

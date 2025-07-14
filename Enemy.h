@@ -1,6 +1,7 @@
 #include "raylib.h"
 
-class Character{
+class Enemy
+{
 private:
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
     Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -23,11 +24,9 @@ private:
     float scale{4.0f};
 
 public:
-    Character(int winWidth, int winHeight);
+    Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture);
     Vector2 getWorldPos() { return worldPos; }
     void tick(float deltaTime);
     void undoMovement();
     Rectangle getCollisionRec();
-    
 };
-
