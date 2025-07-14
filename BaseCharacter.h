@@ -28,6 +28,7 @@ protected:
     float height{};
     float scale{4.0f};
     Vector2 velocity{};
+    bool alive{true};
    
 public:
     BaseCharacter();
@@ -37,6 +38,8 @@ public:
     virtual void tick(float deltaTime);
     // pure virtual function
     virtual Vector2 getScreenPos() = 0;
+    bool getAlive(){ return alive; }
+    void setAlive(bool isAlive){ alive = isAlive; }
 };
 
 
