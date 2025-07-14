@@ -32,4 +32,3 @@ public:
     
 };
 
-// check for the mistake, the character is not drawn to the center of the map

@@ -12,8 +12,9 @@ Character :: Character(int winWidth, int winHeight){
         static_cast<float>(winHeight)/2.0f - scale * (0.5f * height)
     };
 
-    // Suppose your map is 24 tiles * 24 px * scale
+    // start the player position from here
     worldPos = { winWidth * 0.5f, winHeight * 0.5f };
+   
 
 }
 
@@ -55,4 +56,3 @@ void Character :: undoMovement(){
     worldPos = worldPosLastFrame;
 }
 
-// check for the mistake, the character is not drawn to the center of the map

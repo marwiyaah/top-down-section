@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
-
+#include "prop.h"
 
 int main(){
     const int windowHeight{384};
@@ -13,6 +13,7 @@ int main(){
     const float mapScale{4.0f};
 
     Character knight{windowWidth, windowHeight};
+    Prop rock(Vector2{0.f, 0.f}, LoadTexture("nature_tileset/Rock.png"));
     
 
     SetTargetFPS(60);
@@ -25,6 +26,9 @@ int main(){
 
        // draw the map
        DrawTextureEx(map, mapPos, 0.0, mapScale, WHITE);
+
+       rock.Render(knight.getWorldPos());
+       
        knight.tick(GetFrameTime());
         // check map bounds
        if (knight.getWorldPos().x < 0.f ||
@@ -42,4 +46,3 @@ int main(){
 
 }
 
-// check for the mistake, the character is not drawn to the center of the map
