@@ -28,7 +28,7 @@ public:
 
     void tick(float deltaTime);
     void undoMovement();
-    
+    Rectangle getCollisionRec();
     
 };
 
