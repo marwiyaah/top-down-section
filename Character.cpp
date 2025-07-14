@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include "raymath.h"
 
+
+// constructor
 Character :: Character(int winWidth, int winHeight){
     width = texture.width / maxFrames;
     height = texture.height;
@@ -9,6 +11,10 @@ Character :: Character(int winWidth, int winHeight){
         static_cast<float>(winWidth)/2.0f - scale * (0.5f * width),
         static_cast<float>(winHeight)/2.0f - scale * (0.5f * height)
     };
+
+    // Suppose your map is 24 tiles * 24 px * scale
+    worldPos = { winWidth * 0.5f, winHeight * 0.5f };
+
 }
 
 void Character :: tick(float deltaTime){
@@ -48,3 +54,5 @@ void Character :: tick(float deltaTime){
 void Character :: undoMovement(){
     worldPos = worldPosLastFrame;
 }
+
+// check for the mistake, the character is not drawn to the center of the map

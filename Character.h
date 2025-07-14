@@ -23,9 +23,13 @@ private:
     float scale{4.0f};
 
 public:
+    Character(int winWidth, int winHeight);
     Vector2 getWorldPos() { return worldPos; }
+
     void tick(float deltaTime);
     void undoMovement();
-    Character(int winWidth, int winHeight);
+    
     
 };
+
+// check for the mistake, the character is not drawn to the center of the map
